@@ -35,7 +35,6 @@ public class ConnectionHandler implements Runnable {
 	public void processConnections() {
 		if(toProcess.isEmpty())
 			return;
-		misc.printText("size: "+toProcess.size());
 		ArrayList<ConnectionReference> a = new ArrayList<ConnectionReference>(toProcess);
 		ListIterator<ConnectionReference> it;
 		synchronized(toProcess) {
@@ -43,14 +42,12 @@ public class ConnectionHandler implements Runnable {
 			toProcess.clear();
 		}
 		while(it.hasNext()) {
-			misc.printText("working");
 			ConnectionReference c = (ConnectionReference) it.next();
 			if(c.connection() != null) {
 				misc.printError("Strange logic error in connection reference! Skipping!");
 				toProcess.remove(c);
 				continue;
 			}
-			misc.printText("Starting connection");
 			ConnectionInterface con = (c.isUpdate == true ? new ClientUpdate(c.socket) : new PlayerConnection(c.socket));
 			new Thread(con).start();
 			c.setConnection(con);
