@@ -5,14 +5,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import uk.co.jamware.rsource.misc;
 import uk.co.jamware.rsource.connections.io.Stream;
+import uk.co.jamware.rsource.connections.types.support.Cryption;
 
-public class Connection {
-	public Stream inStream, outStream;
-	private DataOutputStream output;
-	private boolean connected = false;
-	private DataInputStream input;
-	
+public class Connection {	
 	public Connection(Socket s) {
 		connected = true;
 		outStream = new Stream();
@@ -26,13 +23,12 @@ public class Connection {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean fillInStream(int i) {
-		if(isDisconnected())
-			return false;
 		try {
 			byte[] b = new byte[i];
-			if(input.read(b, 0, i) == -1) {
+			int a = input.read(b,0,i);
+			if(a == -1) {
 				disconnect();
 				return false;
 			}
@@ -44,6 +40,10 @@ public class Connection {
 			disconnect();
 			return false;
 		}
+	}
+	
+	public int availableIn() throws IOException {
+		return input.available();
 	}
 	
 	public void writeOut() {
@@ -78,4 +78,10 @@ public class Connection {
 		outStream = null;
 		inStream = null;
 	}
+	
+	public Stream inStream, outStream;
+	private DataOutputStream output;
+	private boolean connected = false;
+	private DataInputStream input;
+	public Cryption cryption;
 }
