@@ -23,7 +23,7 @@ public class ClientUpdate extends Connection implements ConnectionInterface {
 		for(int i = 0; i < 8; i++)
 			outStream.writeUnsignedByte((byte) 0);
 		writeOut();
-		while(fillInStream(4)) {
+		while(fillInStream(4) && !isDisconnected()) {
 			int cacheId = inStream.readUnsignedByte();
 			int partId = inStream.readUnsignedShort();
 			int priority = inStream.readUnsignedByte(); /*	immediate = 2
