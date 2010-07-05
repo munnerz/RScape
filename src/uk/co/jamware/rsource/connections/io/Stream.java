@@ -36,10 +36,27 @@ public class Stream {
         long l1 = (long)readUnsignedInt() & 0xffffffffL;
         return (l << 32) + l1;
     }
+	public String readRuneString()
+    {
+        int i = currentOffset;
+        while(buffer[currentOffset++] != 10) ;
+        return new String(buffer, i, currentOffset - i - 1);
+    }
 	
 	public void writeUnsignedByte(int i) {
 		buffer[currentOffset++] = (byte) i;
 	}
+	public void writeLong(long l)
+    {
+        buffer[currentOffset++] = (byte)(int)(l >> 56);
+        buffer[currentOffset++] = (byte)(int)(l >> 48);
+        buffer[currentOffset++] = (byte)(int)(l >> 40);
+        buffer[currentOffset++] = (byte)(int)(l >> 32);
+        buffer[currentOffset++] = (byte)(int)(l >> 24);
+        buffer[currentOffset++] = (byte)(int)(l >> 16);
+        buffer[currentOffset++] = (byte)(int)(l >> 8);
+        buffer[currentOffset++] = (byte)(int)l;
+    }
 	
 	public byte[] getBufferForSending() {
 		byte[] toSend = buffer;
