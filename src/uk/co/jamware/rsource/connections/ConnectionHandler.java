@@ -56,7 +56,6 @@ public class ConnectionHandler implements Runnable {
 	}
 	
 	public void addConnectionReference(Socket s) throws IOException {
-		misc.printText("Adding connection");
 		DataInputStream d = new DataInputStream(s.getInputStream());
 		boolean type = (d.readByte() == 15 ? true : false);
 		toProcess.add(new ConnectionReference(type, s));
