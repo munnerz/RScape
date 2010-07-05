@@ -26,8 +26,8 @@ public class Stream {
 	    return ((buffer[currentOffset - 2] & 0xff) << 8) + (buffer[currentOffset - 1] & 0xff);
 	}
 	
-	public void writeUnsignedByte(byte b) {
-		buffer[currentOffset++] = b;
+	public void writeUnsignedByte(int i) {
+		buffer[currentOffset++] = (byte) i;
 	}
 	
 	public byte[] getBufferForSending() {
