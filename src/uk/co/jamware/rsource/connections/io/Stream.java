@@ -19,7 +19,7 @@ public class Stream {
 	}
 	
 	public int readUnsignedByte() {
-		return (byte) (buffer[currentOffset++] & 0xff);
+		return (buffer[currentOffset++] & 0xff);
 	}
 	public int readUnsignedShort() {
 		currentOffset += 2;
@@ -44,7 +44,7 @@ public class Stream {
     }
 	
 	public void writeUnsignedByte(int i) {
-		buffer[currentOffset++] = (byte) i;
+		buffer[currentOffset++] = (byte) (i & 0xff);
 	}
 	public void writeLong(long l)
     {
@@ -59,7 +59,9 @@ public class Stream {
     }
 	
 	public byte[] getBufferForSending() {
-		byte[] toSend = buffer;
+		byte[] toSend = new byte[currentOffset];
+		for(int i = 0; i < currentOffset; i++)
+			toSend[i] = buffer[i];
 		buffer = new byte[maxSize];
 		currentOffset = 0;
 		return toSend;
