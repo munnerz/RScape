@@ -30,7 +30,6 @@ public class ClientUpdate extends Connection implements ConnectionInterface {
 														 *	not logged in = 1
 														 *	normal = 0
 														 */
-			misc.printText("Got request for file "+partId+" in cache "+cacheId+" priority: "+priority);
 		}
 		// TODO Auto-generated method stub
 		
